@@ -2,8 +2,9 @@
 .idea
 log
 models
-
+.vscode/
 eval_results/
+output/
 
 # Pytorch Models
 *.pth
