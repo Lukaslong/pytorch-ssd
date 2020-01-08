@@ -1,5 +1,6 @@
 .DS_Store
 .idea
+__init__.py
 log
 models/
 .vscode/
