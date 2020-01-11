@@ -75,7 +75,7 @@ def main(args):
         image=cv2.imread(img_name)
 
         timer.start()
-        boxes,labels,probs=predictor.predict(image,10,0.38)
+        boxes,labels,probs=predictor.predict(image,10,0.3)
         interval = timer.end()
 
         print('Time: {:.2f}s, Detect Objects: {:d}.'.format(interval, labels.size(0)))
