@@ -2,6 +2,7 @@ import cv2
 import sys
 import os
 import argparse
+import shutil
 import torch
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
@@ -27,9 +28,8 @@ def main(args):
     else:
         cap=cv2.VideoCapture(args.video_path)
     
-    out_video = args.out_video
     Fourcc=cv2.VideoWriter_fourcc('M','P','4','V')
-    writer=cv2.VideoWriter(out_video,fourcc=Fourcc,fps=15,frameSize=(640,480))
+    writer=cv2.VideoWriter('result.mp4',fourcc=Fourcc,fps=15,frameSize=(640,480))
 
     num_gpus=torch.cuda.device_count()
     device='cuda' if num_gpus else 'cpu'
@@ -100,11 +100,15 @@ def main(args):
     cap.release()
     writer.release()
     cv2.destroyAllWindows()
+    if args.out_video:
+        shutil.move('result.mp4',args.out_video)
+    else:
+        os.remove('result.mp4')
 
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description='Live Detection')
-    parser.add_argument('--net-type',default='mb3-ssd-lite',choices=['mb2-ssd-lite','mb3-ssd-lite'],type=str)
+    parser.add_argument('--net-type',default='mb2-ssd-lite',choices=['mb2-ssd-lite','mb3-ssd-lite'],type=str)
     parser.add_argument('--weights-path',help='path to trained weights')
     parser.add_argument('--label-path',help='path to label file')
     parser.add_argument('--live',action='store_true',default=False)
