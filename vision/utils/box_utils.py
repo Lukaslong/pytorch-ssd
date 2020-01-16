@@ -197,6 +197,7 @@ def hard_negative_mining(loss, labels, neg_pos_ratio):
     num_pos = pos_mask.long().sum(dim=1, keepdim=True)
     num_neg = num_pos * neg_pos_ratio
 
+    loss = loss.view(pos_mask.size()[0], pos_mask.size()[1])
     loss[pos_mask] = -math.inf
     _, indexes = loss.sort(dim=1, descending=True)
     _, orders = indexes.sort(dim=1)
