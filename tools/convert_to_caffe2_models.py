@@ -37,11 +37,12 @@ else:
 net.load(model_path)
 net.eval()
 
-model_path = f"models/{net_type}.onnx"
-init_net_path = f"models/{net_type}_init_net.pb"
-init_net_txt_path = f"models/{net_type}_init_net.pbtxt"
-predict_net_path = f"models/{net_type}_predict_net.pb"
-predict_net_txt_path = f"models/{net_type}_predict_net.pbtxt"
+train_num=model_path.split('/')[1]
+model_path = f"output/{train_num}/{net_type}.onnx"
+init_net_path = f"output/{train_num}/{net_type}_init_net.pb"
+init_net_txt_path = f"output/{train_num}/{net_type}_init_net.pbtxt"
+predict_net_path = f"output/{train_num}/{net_type}_predict_net.pb"
+predict_net_txt_path = f"output/{train_num}/{net_type}_predict_net.pbtxt"
 
 dummy_input = torch.randn(1, 3, 300, 300)
 torch.onnx.export(net, dummy_input, model_path, verbose=False, output_names=['scores', 'boxes'])
