@@ -42,6 +42,7 @@ class SSD(nn.Module):
         locations = []
         start_layer_index = 0
         header_index = 0
+        # source_layer_indexes = [GraphPath(14, 'conv', 3), 19,]
         for end_layer_index in self.source_layer_indexes:
             if isinstance(end_layer_index, GraphPath):
                 path = end_layer_index
